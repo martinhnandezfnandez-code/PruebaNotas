@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -262,8 +263,10 @@ public class TaskManager {
         return tasks;
     }
 
-    // ==================== MENÚ PRINCIPAL ====================
 
+    /**
+     * Menú principal del gestor
+     */
     public void showMenu() {
         while (true) {
             System.out.println("\n╔════════════════════════════════╗");
@@ -310,6 +313,9 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Creador de nuevos gestores
+     */
     public static void main(String[] args) {
         TaskManager manager = new TaskManager();
         manager.showMenu();
