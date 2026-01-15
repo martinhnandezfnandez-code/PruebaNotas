@@ -3,7 +3,12 @@ public class Task {
     private String name;
     private String description;
 
-    // Constructor
+   /**
+    * Constructor de clase Task
+    * @param id numero entero
+    * @param name String del nombre
+    * @param description String del texto de la tarea
+    * */
     public Task(int id, String name, String description) {
         this.id = id;
         this.name = name;
