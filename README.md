@@ -124,28 +124,6 @@ TaskManager es una aplicación de consola que permite gestionar tareas de manera
     </dependency>
 </dependencies>
 ```
-
-## 🚀 Instalación y Uso
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/tu-usuario/task-manager.git
-cd task-manager
-```
-
-### 2. Compilar el proyecto
-
-```bash
-javac -cp .:jackson-databind.jar TaskManager.java
-```
-
-### 3. Ejecutar la aplicación
-
-```bash
-java -cp .:jackson-databind.jar TaskManager
-```
-
 ## 📖 Guía de Uso
 
 Al ejecutar la aplicación, se mostrará el siguiente menú:
