@@ -1,172 +1,142 @@
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Scanner;
-import java.util.UUID;
+# 📋 Gestor de Tareas - Task Manager
 
-public class TaskManager {
-    private ArrayNode tasks;
-    private ObjectMapper objectMapper;
-    private Scanner scanner;
+Sistema de gestión de tareas desarrollado en Java que permite crear, visualizar y eliminar tareas utilizando la biblioteca Jackson para manejo de JSON.
 
-    public TaskManager() {
-        this.objectMapper = new ObjectMapper();
-        this.tasks = objectMapper.createArrayNode();
-        this.scanner = new Scanner(System.in);
-    }
+## 👥 Autores
 
-    // Método original que mantiene compatibilidad con los tests
-    public void addTask(String taskName, String taskDescription) {
-        ObjectNode taskNode = objectMapper.createObjectNode();
-        taskNode.put("id", UUID.randomUUID().toString());
-        taskNode.put("name", taskName);
-        taskNode.put("description", taskDescription);
-        tasks.add(taskNode);
-    }
+- **Manuel Barrera**
+- **Martin**
 
-    // Nuevo método que pide datos por consola
-    public void addTaskFromConsole() {
-        System.out.println("\n=== Agregar nueva tarea ===");
+> Proyecto desarrollado como ejercicio de práctica para presentación en clase.
 
-        System.out.print("Ingrese el nombre de la tarea: ");
-        String taskName = scanner.nextLine().trim();
+## 📝 Descripción
 
-        System.out.print("Ingrese la descripción de la tarea: ");
-        String taskDescription = scanner.nextLine().trim();
+TaskManager es una aplicación de consola que permite gestionar tareas de manera sencilla. Cada tarea incluye un identificador único (UUID), nombre y descripción. Los datos se manejan internamente en formato JSON utilizando Jackson.
 
-        if (taskName.isEmpty()) {
-            System.out.println("Error: El nombre de la tarea no puede estar vacío.");
-            return;
-        }
+## ✨ Características
 
-        addTask(taskName, taskDescription);
-        System.out.println("✓ Tarea agregada exitosamente!");
-    }
+- ➕ **Agregar tareas**: Crear nuevas tareas con nombre y descripción
+- 👁️ **Visualizar tareas**: Ver todas las tareas registradas con sus detalles
+- 🗑️ **Eliminar tareas**: Eliminar tareas seleccionándolas por número
+- 📄 **Exportar JSON**: Ver la representación JSON de todas las tareas
+- 🎨 **Interfaz amigable**: Menú interactivo con navegación intuitiva
 
-    // Método para eliminar tarea por ID
-    public boolean deleteTask(String taskId) {
-        for (int i = 0; i < tasks.size(); i++) {
-            ObjectNode task = (ObjectNode) tasks.get(i);
-            if (task.get("id").asText().equals(taskId)) {
-                tasks.remove(i);
-                return true;
-            }
-        }
-        return false;
-    }
+## 🛠️ Tecnologías Utilizadas
 
-    // Método para eliminar tarea desde la consola
-    public void deleteTaskFromConsole() {
-        if (tasks.size() == 0) {
-            System.out.println("\nNo hay tareas para eliminar.");
-            return;
-        }
+- **Java**: Lenguaje de programación principal
+- **Jackson Databind**: Biblioteca para manejo de JSON
+- **UUID**: Para generación de identificadores únicos
 
-        System.out.println("\n=== Eliminar tarea ===");
-        displayTasksWithNumbers();
+## 📋 Requisitos Previos
 
-        System.out.print("\nIngrese el número de la tarea a eliminar (o 0 para cancelar): ");
-        String input = scanner.nextLine().trim();
+- Java JDK 8 o superior
+- Maven o dependencia manual de Jackson Databind
 
-        try {
-            int taskNumber = Integer.parseInt(input);
-            
-            if (taskNumber == 0) {
-                System.out.println("Operación cancelada.");
-                return;
-            }
+### Dependencia Maven
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.0</version>
+</dependency>
+```
 
-            if (taskNumber < 1 || taskNumber > tasks.size()) {
-                System.out.println("⚠ Número de tarea inválido.");
-                return;
-            }
+## 🚀 Instalación y Uso
 
-            ObjectNode task = (ObjectNode) tasks.get(taskNumber - 1);
-            String taskId = task.get("id").asText();
-            String taskName = task.get("name").asText();
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/task-manager.git
+cd task-manager
+```
 
-            if (deleteTask(taskId)) {
-                System.out.println("✓ Tarea '" + taskName + "' eliminada exitosamente!");
-            } else {
-                System.out.println("⚠ Error al eliminar la tarea.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("⚠ Debe ingresar un número válido.");
-        }
-    }
+### 2. Compilar el proyecto
+```bash
+javac -cp .:jackson-databind.jar TaskManager.java
+```
 
-    // Método auxiliar para mostrar tareas numeradas
-    private void displayTasksWithNumbers() {
-        for (int i = 0; i < tasks.size(); i++) {
-            ObjectNode task = (ObjectNode) tasks.get(i);
-            System.out.println((i + 1) + ". " + task.get("name").asText());
-        }
-    }
+### 3. Ejecutar la aplicación
+```bash
+java -cp .:jackson-databind.jar TaskManager
+```
 
-    public String getTasksAsJson() {
-        try {
-            return objectMapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(tasks);
-        } catch (Exception e) {
-            return "[]";
-        }
-    }
+## 📖 Guía de Uso
 
-    public void displayTasks() {
-        if (tasks.size() == 0) {
-            System.out.println("\nNo hay tareas registradas.");
-            return;
-        }
+Al ejecutar la aplicación, se mostrará el siguiente menú:
+```
+╔════════════════════════════════╗
+║   GESTOR DE TAREAS             ║
+╚════════════════════════════════╝
+1. Agregar tarea
+2. Ver todas las tareas
+3. Eliminar tarea
+4. Ver JSON de tareas
+5. Salir
+```
 
-        System.out.println("\n=== Lista de Tareas ===");
-        for (int i = 0; i < tasks.size(); i++) {
-            ObjectNode task = (ObjectNode) tasks.get(i);
-            System.out.println("\n" + (i + 1) + ". " + task.get("name").asText());
-            System.out.println("   Descripción: " + task.get("description").asText());
-            System.out.println("   ID: " + task.get("id").asText());
-        }
-    }
+### Agregar una tarea
 
-    public void showMenu() {
-        while (true) {
-            System.out.println("\n╔════════════════════════════════╗");
-            System.out.println("║   GESTOR DE TAREAS             ║");
-            System.out.println("╚════════════════════════════════╝");
-            System.out.println("1. Agregar tarea");
-            System.out.println("2. Ver todas las tareas");
-            System.out.println("3. Eliminar tarea");
-            System.out.println("4. Ver JSON de tareas");
-            System.out.println("5. Salir");
-            System.out.print("\nSeleccione una opción: ");
+1. Selecciona la opción `1`
+2. Ingresa el nombre de la tarea
+3. Ingresa la descripción de la tarea
+4. La tarea se agregará automáticamente con un ID único
 
-            String option = scanner.nextLine().trim();
+### Ver todas las tareas
 
-            switch (option) {
-                case "1":
-                    addTaskFromConsole();
-                    break;
-                case "2":
-                    displayTasks();
-                    break;
-                case "3":
-                    deleteTaskFromConsole();
-                    break;
-                case "4":
-                    System.out.println("\n=== JSON de Tareas ===");
-                    System.out.println(getTasksAsJson());
-                    break;
-                case "5":
-                    System.out.println("\n¡Hasta luego!");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("\n⚠ Opción inválida. Por favor, intente de nuevo.");
-            }
-        }
-    }
+Selecciona la opción `2` para ver la lista completa de tareas con sus detalles:
+- Número de tarea
+- Nombre
+- Descripción
+- ID único
 
-    public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
-        manager.showMenu();
-    }
+### Eliminar una tarea
+
+1. Selecciona la opción `3`
+2. Se mostrará una lista numerada de todas las tareas
+3. Ingresa el número de la tarea que deseas eliminar
+4. Ingresa `0` para cancelar la operación
+
+### Ver JSON de tareas
+
+Selecciona la opción `4` para ver la representación JSON formateada de todas las tareas.
+
+## 🏗️ Estructura del Código
+
+### Métodos Principales
+
+- `addTask(String, String)`: Agrega una tarea programáticamente (compatible con tests)
+- `addTaskFromConsole()`: Solicita datos por consola y agrega una tarea
+- `deleteTask(String)`: Elimina una tarea por su ID
+- `deleteTaskFromConsole()`: Interfaz interactiva para eliminar tareas
+- `displayTasks()`: Muestra todas las tareas con formato detallado
+- `getTasksAsJson()`: Retorna las tareas en formato JSON
+- `showMenu()`: Muestra el menú principal y gestiona la navegación
+
+### Estructura de una Tarea (JSON)
+```json
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Nombre de la tarea",
+  "description": "Descripción de la tarea"
 }
+```
+
+## 🧪 Testing
+
+El código mantiene compatibilidad con tests unitarios mediante el método `addTask(String, String)` que permite agregar tareas sin interacción de consola.
+
+## 🤝 Contribuciones
+
+Este proyecto fue desarrollado como ejercicio académico. Las sugerencias y mejoras son bienvenidas.
+
+## 📄 Licencia
+
+Este proyecto es de uso educativo y libre.
+
+## 📞 Contacto
+
+Proyecto desarrollado por Manuel Barrera y Martin como ejercicio de práctica académica.
+
+---
+
+**Fecha de creación**: Enero 2025  
+**Versión**: 1.0.0
