@@ -15,29 +15,42 @@ Este proyecto fue desarrollado siguiendo una metodología de trabajo en equipo, 
 
 ### Funcionalidades Implementadas
 
-#### ✅ Crear Tarea (Manuel/Martin)
+#### ✅ Crear Tarea (Martin)
 - Implementación del método `addTask()` y `addTaskFromConsole()`
 - Validación de entrada de datos
 - Generación automática de ID único (UUID)
 - **Verificación**: La tarea se añade correctamente al listado con todos sus campos
 
-#### ✏️ Editar Tarea (Manuel/Martin)
+#### ✏️ Editar Tarea (Manuel)
 - Implementación del método `editTask()` y `editTaskFromConsole()`
 - Búsqueda de tarea por ID
 - Modificación de nombre y descripción
 - **Verificación**: Los cambios se reflejan correctamente en el listado
 
-#### 🗑️ Eliminar Tarea (Manuel/Martin)
+#### 🗑️ Eliminar Tarea (Martin)
 - Implementación del método `deleteTask()` y `deleteTaskFromConsole()`
 - Selección de tarea por número
 - Confirmación de eliminación
 - **Verificación**: La tarea desaparece completamente del listado
 
-#### 🔍 Filtrar Tareas (Manuel/Martin)
+#### 🔍 Filtrar Tareas (Manuel)
 - Implementación del método `filterTasks()` y `filterTasksFromConsole()`
 - Búsqueda por nombre (insensible a mayúsculas)
 - Búsqueda por descripción
 - **Verificación**: El filtro muestra solo las tareas que coinciden con el criterio
+
+## 👨‍🔬 Pruebas Unitarias no funcionales
+- Usabilidad:
+- Si a la hora de mostar los textos informativos de las tareas se visualizan correctamente.
+- Se muestra claramente que una tarea se ha eliminado
+- El menú de herramientas es entendible
+- Json bien jerarquizado
+  
+- Rendimiento:
+- Se ejecute fluidamente.
+-"Prueba de estres": Creadas 100 tareas y pedido el json y el listado de estas
+- Consumo cpu y ram
+
 
 ## 🧪 Pruebas Unitarias con JUnit
 
