@@ -1,3 +1,43 @@
+```mermaid
+classDiagram
+    class Paciente {
+        +int numHistoriaClinica
+        +string nombre
+        +string direccion
+    }
+
+    class PersonalSanitario {
+        +int numEmpleado
+        +string nombre
+        +string tipo
+    }
+
+    class Medico {
+        +string especialidad
+    }
+
+    class Enfermero {
+    }
+
+    class Analisis {
+        +int numReferencia
+        +string tipoAnalisis
+        +date fecha
+        +string resultados
+    }
+
+    PersonalSanitario <|-- Medico
+    PersonalSanitario <|-- Enfermero
+
+    Paciente "1..*" -- "1..*" Medico : atendido por
+    Paciente "1..*" -- "1..*" Enfermero : asistido por
+
+    Paciente "1" -- "0..*" Analisis : se le realiza
+    Medico "1" -- "0..*" Analisis : solicita
+    Enfermero "1..*" -- "0..*" Analisis : realiza
+```
+
+
 # 📋 Gestor de Tareas - Task Manager
 
 Sistema de gestión de tareas desarrollado en Java con pruebas unitarias, creado como proyecto de aprendizaje sobre desarrollo colaborativo y testing.
